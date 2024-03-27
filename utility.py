@@ -1,8 +1,7 @@
 from dotenv import load_dotenv
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_core.document_loaders.base import BaseLoader
-from langchain.vectorstores import FAISS
-#from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from langchain_core.embeddings.embeddings import Embeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -14,8 +13,6 @@ def load_api_key():
     load_dotenv()
     #print(f"[API KEY]\n{os.environ['OPENAI_API_KEY']}")
 
-
-
 def pretty_print_docs(docs):
     print(
         f"\n{'-' * 100}\n".join(
@@ -23,10 +20,15 @@ def pretty_print_docs(docs):
         )
     )
     
-def build_sample_db(loader: BaseLoader
-                     = WebBaseLoader("https://teddylee777.github.io/openai/openai-assistant-tutorial/", encoding="utf-8"),
-                     embedding: Embeddings
-                    = OpenAIEmbeddings()):
+def build_sample_db(loader = None, embedding = None):
+    if loader is None:
+        loader = WebBaseLoader("https://teddylee777.github.io/openai/openai-assistant-tutorial/", encoding="utf-8")
+    assert(isinstance(loader, BaseLoader))
+
+    if embedding is None:
+        embedding = OpenAIEmbeddings()
+    assert(isinstance(embedding, Embeddings))
+
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
     docs = loader.load_and_split(text_splitter)
     db = FAISS.from_documents(docs, embedding)
