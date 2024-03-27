@@ -23,10 +23,15 @@ def pretty_print_docs(docs):
         )
     )
     
-def build_sample_db(loader: BaseLoader
-                     = WebBaseLoader("https://teddylee777.github.io/openai/openai-assistant-tutorial/", encoding="utf-8"),
-                     embedding: Embeddings
-                    = OpenAIEmbeddings()):
+def build_sample_db(loader = None, embedding = None):
+    if loader is None:
+        loader = WebBaseLoader("https://teddylee777.github.io/openai/openai-assistant-tutorial/", encoding="utf-8")
+    assert(isinstance(loader, BaseLoader))
+
+    if embedding is None:
+        embedding = OpenAIEmbeddings()
+    assert(isinstance(embedding, Embeddings))
+
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
     docs = loader.load_and_split(text_splitter)
     db = FAISS.from_documents(docs, embedding)
