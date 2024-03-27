@@ -13,8 +13,7 @@ def main():
         #loader = TextLoader("./local_datasets/state_of_the_union.txt"),
         #embedding= HuggingFaceEmbeddings()
         #                 )
-    
-   
+
     #기본 retriever
     retriever = initialize_retriever(db)
     
