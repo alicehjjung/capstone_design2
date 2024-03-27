@@ -4,10 +4,10 @@ from langchain_community.document_loaders import TextLoader
 from langchain_community.embeddings import HuggingFaceEmbeddings
 
 def main():
-    #load_api_key()
+    load_api_key()
     db = build_sample_db(
-        #loader = TextLoader("./local_datasets/state_of_the_union.txt"),
-        #embedding= HuggingFaceEmbeddings()
+        loader = TextLoader("./local_datasets/state_of_the_union.txt"),
+        embedding= HuggingFaceEmbeddings()
                          )
     
    

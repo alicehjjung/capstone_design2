@@ -1,8 +1,7 @@
 from dotenv import load_dotenv
 from langchain_community.document_loaders import WebBaseLoader
 from langchain_core.document_loaders.base import BaseLoader
-from langchain.vectorstores import FAISS
-#from langchain_community.vectorstores import FAISS
+from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
 from langchain_core.embeddings.embeddings import Embeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
@@ -13,8 +12,6 @@ import os
 def load_api_key():
     load_dotenv()
     #print(f"[API KEY]\n{os.environ['OPENAI_API_KEY']}")
-
-
 
 def pretty_print_docs(docs):
     print(
