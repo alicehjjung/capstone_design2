@@ -5,10 +5,14 @@ from langchain_community.embeddings import HuggingFaceEmbeddings
 
 def main():
     load_api_key()
-    db = build_sample_db(
-        loader = TextLoader("./local_datasets/state_of_the_union.txt"),
-        embedding= HuggingFaceEmbeddings()
-                         )
+    db = build_sample_db()
+
+    # 임베딩 모델을 오픈소스(허깅페이스)모델로 이용할 수 있습니다(OpenAI 없이 로컬에서 동작가능)
+    # 또한 데이터셋도 로컬 텍스트 파일로 이용가능합니다.
+    #db = build_sample_db(
+        #loader = TextLoader("./local_datasets/state_of_the_union.txt"),
+        #embedding= HuggingFaceEmbeddings()
+        #                 )
     
    
     #기본 retriever
