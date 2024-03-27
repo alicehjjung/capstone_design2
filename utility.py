@@ -12,6 +12,13 @@ def load_api_key():
     load_dotenv()
     #print(f"[API KEY]\n{os.environ['OPENAI_API_KEY']}")
 
+def pretty_print_docs(docs):
+    print(
+        f"\n{'-' * 100}\n".join(
+            [f"Document {i+1}:\n\n" + d.page_content for i, d in enumerate(docs)]
+        )
+    )
+    
 def build_sample_db():
     loader = WebBaseLoader("https://teddylee777.github.io/openai/openai-assistant-tutorial/", encoding="utf-8")
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
