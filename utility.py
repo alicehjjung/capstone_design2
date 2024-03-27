@@ -1,8 +1,10 @@
 from dotenv import load_dotenv
 from langchain_community.document_loaders import WebBaseLoader
+from langchain_core.document_loaders.base import BaseLoader
 from langchain.vectorstores import FAISS
 #from langchain_community.vectorstores import FAISS
 from langchain_openai import OpenAIEmbeddings
+from langchain_core.embeddings.embeddings import Embeddings
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain.retrievers.multi_query import MultiQueryRetriever
 from langchain_openai import ChatOpenAI
@@ -12,12 +14,22 @@ def load_api_key():
     load_dotenv()
     #print(f"[API KEY]\n{os.environ['OPENAI_API_KEY']}")
 
-def build_sample_db():
-    loader = WebBaseLoader("https://teddylee777.github.io/openai/openai-assistant-tutorial/", encoding="utf-8")
+
+
+def pretty_print_docs(docs):
+    print(
+        f"\n{'-' * 100}\n".join(
+            [f"Document {i+1}:\n\n" + d.page_content for i, d in enumerate(docs)]
+        )
+    )
+    
+def build_sample_db(loader: BaseLoader
+                     = WebBaseLoader("https://teddylee777.github.io/openai/openai-assistant-tutorial/", encoding="utf-8"),
+                     embedding: Embeddings
+                    = OpenAIEmbeddings()):
     text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=0)
     docs = loader.load_and_split(text_splitter)
-    openai_embedding = OpenAIEmbeddings()
-    db = FAISS.from_documents(docs, openai_embedding)
+    db = FAISS.from_documents(docs, embedding)
     return db
 
 def initialize_retriever(db):
